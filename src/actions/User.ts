@@ -1,18 +1,30 @@
 import { Dispatch } from "react";
 import { ActionType } from "../@types/EntityActionType";
-import { IUser } from "../@types/IUser";
 import UserService from "../services/Userservice";
-import { RETRIEVE_USERS } from "./Types";
+import { USER_REQUEST, USER_RESPONSE_SUCCESS, USER_RESPONSE_FAILED } from "./Types";
 
 export const retrieveUsers = () => async (dispatch: Dispatch<ActionType>) => {
     try {
-        const result = await UserService.getAllUsers();
 
         dispatch({
-            type: RETRIEVE_USERS,
-            payload: result.data
-        })
+            type: USER_REQUEST
+        });
+
+        const result = await UserService.getAllUsers();
+
+        if (result.status === 200) {
+            dispatch({
+                type: USER_RESPONSE_SUCCESS,
+                payload: result.data
+            })
+        } else {
+            dispatch({
+                type: USER_RESPONSE_FAILED
+            })
+        }
     } catch (error) {
-        console.log(error);
+        dispatch({
+            type: USER_RESPONSE_FAILED
+        })
     }
 }

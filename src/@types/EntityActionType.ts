@@ -1,9 +1,9 @@
-import { RETRIEVE_USERS } from "../actions/Types";
-import { IUser } from "./IUser";
+import { USER_REQUEST } from "../actions/Types";
+import { IUser } from "./IUserState";
 
 export interface retrieveUsersActionType {
-    type: typeof RETRIEVE_USERS;
-    payload: IUser[];
+    type: typeof USER_REQUEST;
+    payload?: IUser[];
 }
 
 
